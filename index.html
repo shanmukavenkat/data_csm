@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="VVIT_logo.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,34 +15,17 @@
     <style>
         .results {
             margin-top: 20px;
-            background-color: #e6e6fa;
+            background-color: transparent;
             padding: 20px;
             border-radius: 10px;
             font-family: 'Heebo', sans-serif;
-        }
-        .results table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .results th, .results td {
-            padding: 8px;
-            text-align: left;
-        }
-        .results th {
-            width: 50%;
-            font-weight: bold;
-        }
-        .results td {
-            width: 50%;
-        }
-        .results tr {
-            border-bottom: 1px solid #ddd;
         }
         .diagram {
             display: flex;
             justify-content: center;
             margin-top: 20px;
         }
+
     </style>
 </head>
 <body>
@@ -52,7 +35,7 @@
             <a class="navbar-brand" href="clg.html">
                 <img src="VVIT_logo.svg" alt="logo" class="logo"/>
             </a>
-<!--            <button class="btn btn-primary button_s text-right">LOGIN</button> -->
+            <!-- <button class="btn btn-primary button_s text-right">LOGIN</button> -->
         </nav>
     </div>
     <div class="text-center">
@@ -109,48 +92,54 @@
 
         if (student) {
             resultDiv.innerHTML = `
-            <table>
-                <tr>
-                    <th>STUDENT NAME:</th>
-                    <td>${student.Name_of_the_Candidate}</td>
-                </tr>
-                <tr>
-                    <th>REGD NO:</th>
-                    <td>${student.rollNo}</td>
-                </tr>
-                <tr>
-                    <th>BRANCH:</th>
-                    <td>${student.branch}</td>
-                </tr>
-                <tr>
-                    <th>SECTION:</th>
-                    <td>${student.section}</td>
-                </tr>
-                <tr>
-                    <th>1st Year SGPA (1):</th>
-                    <td>${student['first_year_SGPA(1)']}</td>
-                    <th>1st Year SGPA (2):</th>
-                    <td>${student['first_year_SGPA(2)']}</td>
-                </tr>
-                <tr>
-                    <th>2nd Year SGPA (1):</th>
-                    <td>${student['second_year_SGPA(1)']}</td>
-                    <th>2nd Year SGPA (2):</th>
-                    <td>${student['second_year_SGPA(2)']}</td>
-                </tr>
-                <tr>
-                    <th>3rd Year SGPA (1):</th>
-                    <td>${student['third_year_SGPA(1)']}</td>
-                    <th>3rd Year SGPA (2):</th>
-                    <td>${student['third_year_SGPA(2)']}</td>
-                </tr>
-                <tr>
-                    <th>4th Year SGPA (1):</th>
-                    <td>${student['fourth_year_SGPA(1)']}</td>
-                    <th>4th Year SGPA (2):</th>
-                    <td>${student['fourth_year_SGPA(2)']}</td>
-                </tr>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-bordered  table-light ">
+                    <tbody>
+                        <tr >
+                            <th scope="row">STUDENT NAME:</th>
+                            <td>${student.Name_of_the_Candidate}</td>
+
+                            <th scope="row">REGD NO:</th>
+                            <td>${student.rollNo}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">BRANCH:</th>
+                            <td>${student.branch}</td>
+
+                            <th scope="row">SECTION:</th>
+                            <td>${student.section}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1st Year SGPA (1):</th>
+                            <td>${student['first_year_SGPA(1)']}</td>
+
+                            <th scope="row">1st Year SGPA (2):</th>
+                            <td>${student['first_year_SGPA(2)']}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2nd Year SGPA (1):</th>
+                            <td>${student['second_year_SGPA(1)']}</td>
+
+                            <th scope="row">2nd Year SGPA (2):</th>
+                            <td>${student['second_year_SGPA(2)']}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3rd Year SGPA (1):</th>
+                            <td>${student['third_year_SGPA(1)']}</td>
+
+                            <th scope="row">3rd Year SGPA (2):</th>
+                            <td>${student['third_year_SGPA(2)']}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">4th Year SGPA (1):</th>
+                            <td>${student['fourth_year_SGPA(1)']}</td>
+
+                            <th scope="row">4th Year SGPA (2):</th>
+                            <td>${student['fourth_year_SGPA(2)']}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         `;
             diagramDiv.style.display = 'none'; // Hide the diagram when showing results
         } else {
