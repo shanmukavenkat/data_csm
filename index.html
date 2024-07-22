@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="VVIT_logo.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:ital,wght@1,400;1,500&family=Cinzel:wght@700;800&family=Heebo:wght@500&family=Marcellus+SC&family=Tilt+Prism&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/b6207faf77.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="index.css">
+
+    <title>VVIT_SPI</title>
+    <style>
+        .results {
+            margin-top: 20px;
+            background-color: #e6e6fa;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Heebo', sans-serif;
+        }
+        .results table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .results th, .results td {
+            padding: 8px;
+            text-align: left;
+        }
+        .results th {
+            width: 50%;
+            font-weight: bold;
+        }
+        .results td {
+            width: 50%;
+        }
+        .results tr {
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <nav class="navbar">
+            <a class="navbar-brand" href="clg.html">
+                <img src="VVIT_logo.svg" alt="logo" class="logo"/>
+            </a>
+            <button class="btn btn-primary button_s text-right">LOGIN</button>
+        </nav>
+    </div>
+    <div class="text-center">
+        <h1 class="titles">SPI</h1>
+        <label>
+            <div class="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12 search-container">
+                <input type="text" placeholder="ENTER YOUR ROLL NUMBER" name="search" class="search-input" id="searchInput">
+                <button class="search-button" onclick="performSearch()">
+                    <i class="fa-solid fa-magnifying-glass fa-bounce fa-lg"></i>
+                </button>
+            </div>
+        </label>
+        <div class="d-flex flex-row justify-content-center">
+            <img src="st1.svg" class="st1 mr-2 d-none d-sm-none d-md-block d-lg-block d-xl-block" alt="reload"/>
+            <img src="students.svg" class="st3 d-none d-sm-none d-md-inline d-lg-block d-xl-block" alt="reload"/>
+            <img src="st2.svg" class="st2 d-none d-sm-none d-md-inline d-lg-block d-xl-block" alt="reload"/>
+            <img src="students.svg" class="st4 d-sm-none d-md-none d-lg-none d-xl-none" alt="reload"/>
+        </div>
+    </div>
+    <div id="results" class="results"></div>
+</div>
+
+<script>
+    async function fetchStudentData() {
+        try {
+            const response = await fetch('students.json');
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('There has been a problem with your fetch operation:', error);
+        }
+    }
+
+    async function performSearch() {
+        const searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
+        const resultDiv = document.getElementById('results');
+        const studentData = await fetchStudentData();
+
+        // Find student by roll number or name
+        const student = studentData.find(s =>
+            s.rollNo.toLowerCase() === searchQuery ||
+            s.Name_of_the_Candidate.toLowerCase().includes(searchQuery)
+        );
+
+        if (student) {
+            resultDiv.innerHTML = `
+            <table>
+                <tr>
+                    <th>STUDENT NAME:</th>
+                    <td>${student.Name_of_the_Candidate}</td>
+                </tr>
+                <tr>
+                    <th>REGD NO:</th>
+                    <td>${student.rollNo}</td>
+                </tr>
+                <tr>
+                    <th>BRANCH:</th>
+                    <td>${student.branch}</td>
+                </tr>
+                <tr>
+                    <th>SECTION:</th>
+                    <td>${student.section}</td>
+                </tr>
+                <tr>
+                    <th>1st Year SGPA (1):</th>
+                    <td>${student['first_year_SGPA(1)']}</td>
+                    <th>1st Year SGPA (2):</th>
+                    <td>${student['first_year_SGPA(2)']}</td>
+                </tr>
+                <tr>
+                    <th>2nd Year SGPA (1):</th>
+                    <td>${student['second_year_SGPA(1)']}</td>
+                    <th>2nd Year SGPA (2):</th>
+                    <td>${student['second_year_SGPA(2)']}</td>
+                </tr>
+                <tr>
+                    <th>3rd Year SGPA (1):</th>
+                    <td>${student['third_year_SGPA(1)']}</td>
+                    <th>3rd Year SGPA (2):</th>
+                    <td>${student['third_year_SGPA(2)']}</td>
+                </tr>
+                <tr>
+                    <th>4th Year SGPA (1):</th>
+                    <td>${student['fourth_year_SGPA(1)']}</td>
+                    <th>4th Year SGPA (2):</th>
+                    <td>${student['fourth_year_SGPA(2)']}</td>
+                </tr>
+            </table>
+        `;
+        } else {
+            resultDiv.innerHTML = '<p>No data found for the entered roll number or name.</p>';
+        }
+    }
+
+</script>
+</body>
+</html>
