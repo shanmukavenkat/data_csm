@@ -38,6 +38,11 @@
         .results tr {
             border-bottom: 1px solid #ddd;
         }
+        .diagram {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -60,7 +65,7 @@
                 </button>
             </div>
         </label>
-        <div class="d-flex flex-row justify-content-center">
+        <div class="diagram" id="diagram">
             <img src="st1.svg" class="st1 mr-2 d-none d-sm-none d-md-block d-lg-block d-xl-block" alt="reload"/>
             <img src="students.svg" class="st3 d-none d-sm-none d-md-inline d-lg-block d-xl-block" alt="reload"/>
             <img src="st2.svg" class="st2 d-none d-sm-none d-md-inline d-lg-block d-xl-block" alt="reload"/>
@@ -86,6 +91,14 @@
     async function performSearch() {
         const searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
         const resultDiv = document.getElementById('results');
+        const diagramDiv = document.getElementById('diagram');
+
+        if (!searchQuery) {
+            diagramDiv.style.display = 'flex';
+            resultDiv.innerHTML = ''; // Clear any previous results
+            return;
+        }
+
         const studentData = await fetchStudentData();
 
         // Find student by roll number or name
@@ -139,11 +152,24 @@
                 </tr>
             </table>
         `;
+            diagramDiv.style.display = 'none'; // Hide the diagram when showing results
         } else {
             resultDiv.innerHTML = '<p>No data found for the entered roll number or name.</p>';
+            diagramDiv.style.display = 'flex'; // Show the diagram if no results are found
         }
     }
 
+    // Add an event listener to show the diagram if input is cleared
+    document.getElementById('searchInput').addEventListener('input', function() {
+        const searchQuery = this.value.trim().toLowerCase();
+        const diagramDiv = document.getElementById('diagram');
+        const resultDiv = document.getElementById('results');
+
+        if (!searchQuery) {
+            diagramDiv.style.display = 'flex';
+            resultDiv.innerHTML = ''; // Clear results when input is empty
+        }
+    });
 </script>
 </body>
 </html>
