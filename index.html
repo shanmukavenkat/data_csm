@@ -15,9 +15,9 @@
     <style>
         .results {
             margin-top: 20px;
-            background-color: transparent;
+
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 20px;
             font-family: 'Heebo', sans-serif;
         }
         .diagram {
@@ -25,6 +25,17 @@
             justify-content: center;
             margin-top: 20px;
         }
+
+
+       .table{
+            border-radius: 12px;
+           background: #f9f6ee;
+           border: 1px solid #ff123120;
+           backdrop-filter: blur(10px) saturate(120%);
+            font-family: 'Heebo', sans-serif;
+
+        }
+
 
     </style>
 </head>
@@ -92,8 +103,8 @@
 
         if (student) {
             resultDiv.innerHTML = `
-            <div class="table-responsive">
-                <table class="table table-bordered  table-light ">
+            <div class="table-responsive rounded">
+                <table class="table table-bordered table-light ">
                     <tbody>
                         <tr >
                             <th scope="row">STUDENT NAME:</th>
